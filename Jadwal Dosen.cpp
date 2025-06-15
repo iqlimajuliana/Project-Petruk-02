@@ -19,3 +19,10 @@ struct MataKuliah {
     string hari, jam, kelas, ruang;
 };
 
+int getPrioritas(const string& jenis) {
+    return (jenis == "wajib" || jenis == "Wajib") ? 2 : 1;
+}
+
+bool comparePrioritas(const MataKuliah& a, const MataKuliah& b) {
+    return getPrioritas(a.jenis) > getPrioritas(b.jenis);
+}
