@@ -101,5 +101,8 @@ for (const auto& [dosen, jadwal] : jadwalDosen) {
                 << setw(15) << mk.ruang << "\n";
         }
     }
+out.close();
+    cout << "\n? Jadwal berhasil disimpan ke '" << filename << "'\n";
+}
 
 
