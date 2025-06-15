@@ -39,3 +39,18 @@ int main() {
             dosen.erase(0, dosen.find_first_not_of(" "));
             mk.dosenPengampu.push_back(dosen);
         }
+        cout << "Hari: ";
+        getline(cin, mk.hari);
+        cout << "Jam: ";
+        getline(cin, mk.jam);
+        cout << "Kelas: ";
+        getline(cin, mk.kelas);
+        cout << "Ruang: ";
+        getline(cin, mk.ruang);
+
+        daftarMatkul.push_back(mk);
+    }
+
+    cout << "\n✅ Data berhasil dimasukkan.\n";
+    return 0;
+}
