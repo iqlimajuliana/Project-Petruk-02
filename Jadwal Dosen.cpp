@@ -67,3 +67,10 @@ vector<MataKuliah> knapsackDC(int i, int kapasitas, const vector<MataKuliah>& ma
 
     vector<MataKuliah> skip = knapsackDC(i - 1, kapasitas, matkul, memo);
 
+    int totalSKSAmbil = 0, totalSKSSkip = 0;
+    for (size_t k = 0; k < ambil.size(); ++k) totalSKSAmbil += ambil[k].sks;
+    for (size_t k = 0; k < skip.size(); ++k) totalSKSSkip += skip[k].sks;
+
+    memo[i][kapasitas] = max(totalSKSAmbil, totalSKSSkip);
+    return (totalSKSAmbil > totalSKSSkip) ? ambil : skip;
+}
