@@ -10,3 +10,12 @@
 #include <cstring> // untuk c-string
 
 using namespace std;
+
+struct MataKuliah {
+    string nama;
+    int sks;
+    string jenis; 
+    vector<string> dosenPengampu;
+    string hari, jam, kelas, ruang;
+};
+
