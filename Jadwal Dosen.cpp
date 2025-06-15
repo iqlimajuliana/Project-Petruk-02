@@ -57,3 +57,8 @@ vector<MataKuliah> knapsackDC(int i, int kapasitas, const vector<MataKuliah>& ma
     if (i < 0 || kapasitas <= 0) return {};
     if (memo[i][kapasitas] != -1) return {};
 
+    if (matkul[i].sks > kapasitas) {
+        memo[i][kapasitas] = 0;
+        return knapsackDC(i - 1, kapasitas, matkul, memo);
+    }
+
