@@ -74,10 +74,19 @@ vector<MataKuliah> knapsackDC(int i, int kapasitas, const vector<MataKuliah>& ma
     memo[i][kapasitas] = max(totalSKSAmbil, totalSKSSkip);
     return (totalSKSAmbil > totalSKSSkip) ? ambil : skip;
 }
-/ Fungsi menyimpan hasil ke file
+/ Fungsi yang menyimpan hasil ke dalam file 
 void simpanJadwal(const map<string, vector<MataKuliah>>& jadwalDosen, const string& filename) {
     ofstream out(filename);
     if (!out) {
         cerr << "Gagal membuka file output!" << endl;
         return;
     }
+out << "======= JADWAL MENGAJAR DOSEN =======\n\n";
+    out << left << setw(20) << "Mata Kuliah" 
+        << setw(5)  << "SKS" 
+        << setw(10) << "Hari" 
+        << setw(15) << "Jam" 
+        << setw(10) << "Kelas" 
+        << setw(15) << "Ruang" << "\n";
+    out << string(75, '-') << "\n";
+
