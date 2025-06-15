@@ -51,3 +51,9 @@ void mergeSort(vector<MataKuliah>& matkul, int left, int right) {
         merge(matkul, left, mid, right);
     }
 }
+
+// Kapasitas Matkul (conquer)
+vector<MataKuliah> knapsackDC(int i, int kapasitas, const vector<MataKuliah>& matkul, vector<vector<int>>& memo) {
+    if (i < 0 || kapasitas <= 0) return {};
+    if (memo[i][kapasitas] != -1) return {};
+
