@@ -90,3 +90,16 @@ out << "======= JADWAL MENGAJAR DOSEN =======\n\n";
         << setw(15) << "Ruang" << "\n";
     out << string(75, '-') << "\n";
 
+for (const auto& [dosen, jadwal] : jadwalDosen) {
+        out << "\nDosen: " << dosen << "\n";
+        for (const auto& mk : jadwal) {
+            out << " - " << left << setw(18) << mk.nama 
+                << setw(5)  << mk.sks 
+                << setw(10) << mk.hari 
+                << setw(15) << mk.jam 
+                << setw(10) << mk.kelas 
+                << setw(15) << mk.ruang << "\n";
+        }
+    }
+
+
