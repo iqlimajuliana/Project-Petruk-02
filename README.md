@@ -1,1 +1,1 @@
-# Projrct-Petruk-02
+# Project-Petruk-02
