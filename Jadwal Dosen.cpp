@@ -104,5 +104,71 @@ for (const auto& [dosen, jadwal] : jadwalDosen) {
 out.close();
     cout << "\n? Jadwal berhasil disimpan ke '" << filename << "'\n";
 }
+int main() {
+    int n, batasSKS;
+    cout << "Masukkan jumlah mata kuliah: "; cin >> n;
+    cout << "Masukkan batas maksimal SKS per dosen: "; cin >> batasSKS;
+    cin.ignore();
 
+    vector<MataKuliah> daftarMatkul;
+    map<string, vector<MataKuliah>> calonMatkulPerDosen;
+    map<string, vector<MataKuliah>> jadwalDosen;
+    map<string, int> totalSKSDosen;
+
+    for (int i = 0; i < n; i++) {
+        MataKuliah mk;
+        cout << "\nMata kuliah ke-" << i + 1 << ":\n";
+        cout << "Nama Mata Kuliah: "; getline(cin, mk.nama);
+        cout << "Jumlah SKS: "; cin >> mk.sks; cin.ignore();
+        cout << "Jenis (Wajib/Pilihan): "; getline(cin, mk.jenis);
+        cout << "Dosen Pengampu (pisahkan dengan koma): ";
+        string line; getline(cin, line);
+        stringstream ss(line);
+        string dosen;
+        while (getline(ss, dosen, ',')) {
+            dosen.erase(0, dosen.find_first_not_of(" "));
+            mk.dosenPengampu.push_back(dosen);
+        }
+        cout << "Hari: "; getline(cin, mk.hari);
+        cout << "Jam (contoh: 08:00-10:00): "; getline(cin, mk.jam);
+        cout << "Kelas: "; getline(cin, mk.kelas);
+        cout << "Ruang: "; getline(cin, mk.ruang);
+        daftarMatkul.push_back(mk);
+    }
+
+    // Urutkan berdasarkan prioritas wajib > pilihan
+    mergeSort(daftarMatkul, 0, daftarMatkul.size() - 1);
+
+    // Masukkan ke struktur per dosen
+    for (const auto& mk : daftarMatkul) {
+        for (const string& dsn : mk.dosenPengampu)
+            calonMatkulPerDosen[dsn].push_back(mk);
+    }
+
+    // Jalankan knapsack per dosen
+    for (auto it = calonMatkulPerDosen.begin(); it != calonMatkulPerDosen.end(); ++it) {
+        const string& dosen = it->first;
+        const vector<MataKuliah>& matkulList = it->second;
+        int m = matkulList.size();
+        vector<vector<int>> memo(m, vector<int>(batasSKS + 1, -1));
+        vector<MataKuliah> hasil = knapsackDC(m - 1, batasSKS, matkulList, memo);
+        jadwalDosen[dosen] = hasil;
+        for (const auto& mk : hasil)
+            totalSKSDosen[dosen] += mk.sks;
+    }
+
+    // Contoh penggunaan stack dan queue
+    stack<string> logStack;
+    queue<string> logQueue;
+    for (const auto& [dosen, listMatkul] : jadwalDosen) {
+        logStack.push(dosen);
+        logQueue.push(dosen);
+    }
+
+    cout << "\nLog Stack (dosen terakhir yang diproses): " << logStack.top() << endl;
+    cout << "Log Queue (dosen pertama yang diproses): " << logQueue.front() << endl;
+
+    simpanJadwal(jadwalDosen, "jadwal_dosen.txt");
+    return 0;
+}
 
