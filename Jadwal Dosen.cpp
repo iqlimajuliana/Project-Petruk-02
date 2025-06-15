@@ -61,4 +61,9 @@ vector<MataKuliah> knapsackDC(int i, int kapasitas, const vector<MataKuliah>& ma
         memo[i][kapasitas] = 0;
         return knapsackDC(i - 1, kapasitas, matkul, memo);
     }
+    
+    vector<MataKuliah> ambil = knapsackDC(i - 1, kapasitas - matkul[i].sks, matkul, memo);
+    ambil.push_back(matkul[i]);
+
+    vector<MataKuliah> skip = knapsackDC(i - 1, kapasitas, matkul, memo);
 
